@@ -1,8 +1,9 @@
 
 const express = require('express');
 const path = require('path');
-const { clog } = require('./clog');
-const savedNotes= require('../../../db/saveNotes');
+const { clog } = require('./public/assets/js/clog');
+
+const savedNotes= require('./db/saveNotes');
 const { title } = require('process');
 const PORT = process.env.PORT||3001;
 
@@ -15,12 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(clog);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../html/index.html'));
+    res.sendFile(path.join(__dirname, './html/index.html'));
 });
 
 app.get('/notes',(req,res) =>{
-    //window.location.href
-    res.sendFile(path.join(__dirname,'../html/notes.html'))
+   
+    res.sendFile(path.join(__dirname,'./html/notes.html'))
 
     savedNotes.forEach(element => {
        ntitle= element.noteTitle;
@@ -30,11 +31,6 @@ app.get('/notes',(req,res) =>{
    
     //return res.status(200).json(savedNotes);
 });
-
-// app.get('/notes' ,(req,res)=>{
-//     console.log(savedNotes);
-//     return res.status(200).json(savedNotes);
-// });
 
 app.post('/notes', (req, res) => {
     let response;
@@ -57,8 +53,7 @@ app.post('/notes', (req, res) => {
 
 app.listen(PORT, () => {
          console.log(`Example app listening at http://localhost:${PORT}`);
-    });
-
+});
     
 
 module.exports = app;

@@ -1,6 +1,6 @@
-const express = require('express');
-const app = require('app');
-app.use(express.static('js'));
+// const express = require('express');
+// const app = require('app');
+// app.use(express.static('js'));
 
 let noteForm;
 let noteTitle;
