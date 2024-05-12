@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const { clog } = require('./public/assets/js/clog');
-
+//const thing =require('./public')
 const savedNotes= require('./db/saveNotes');
 const { title } = require('process');
 const PORT = process.env.PORT||3001;
@@ -12,6 +12,7 @@ const app = express();
 // Middleware for parsing application/json and urlencoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.use(clog);
 
@@ -49,11 +50,9 @@ app.post('/notes', (req, res) => {
     // Log the response body to the console
     //console.log(response.data);
 });
-    
 
 app.listen(PORT, () => {
          console.log(`Example app listening at http://localhost:${PORT}`);
 });
     
-
 module.exports = app;
