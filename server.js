@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const { clog } = require('./public/assets/js/clog');
-//const thing =require('./public')
+//const thing =require('./public/index.html')
 const savedNotes= require('./db/saveNotes');
 const { title } = require('process');
 const PORT = process.env.PORT||3001;
@@ -10,19 +10,20 @@ const PORT = process.env.PORT||3001;
 const app = express();
 
 // Middleware for parsing application/json and urlencoded data
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+
 
 app.use(clog);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './html/index.html'));
+    res.sendFile(path.join(__dirname, './public/'));
 });
 
 app.get('/notes',(req,res) =>{
    
-    res.sendFile(path.join(__dirname,'./html/notes.html'))
+    res.sendFile(path.join(__dirname,'./public/notes.html'))
 
     savedNotes.forEach(element => {
        ntitle= element.noteTitle;
