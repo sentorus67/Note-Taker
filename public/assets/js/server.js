@@ -19,11 +19,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/notes',(req,res) =>{
+    //window.location.href
     res.sendFile(path.join(__dirname,'../html/notes.html'))
 
     savedNotes.forEach(element => {
-       title= element.noteTitle;
-       text=element.noteText;
+       ntitle= element.noteTitle;
+       ntext=element.noteText;
        console.log(element);
     });
    
