@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const { clog } = require('./public/assets/js/clog');
-//const thing =require('./public/index.html')
+const api = require('./public/assets/Routes/index.js')
 const savedNotes= require('./db/saveNotes');
 const { title } = require('process');
 const PORT = process.env.PORT||3001;
@@ -10,18 +10,22 @@ const PORT = process.env.PORT||3001;
 const app = express();
 
 // Middleware for parsing application/json and urlencoded data
-app.use(express.static('public'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use('/api',api);
 
 app.use(clog);
+app.use(express.static('public'));
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/'));
 });
 
 app.get('/notes',(req,res) =>{
+
+  console.log('get request search for a responding target'),
    
     res.sendFile(path.join(__dirname,'./public/notes.html'))
 
@@ -33,6 +37,12 @@ app.get('/notes',(req,res) =>{
    
     //return res.status(200).json(savedNotes);
 });
+
+
+// app.get('/api/notes', (req,res) => {
+
+//   console.log('get request search for a responding target')
+// });
 
 app.post('/notes', (req, res) => {
     let response;

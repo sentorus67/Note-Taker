@@ -2,6 +2,7 @@ const savedNotes=[
     {
         noteTitle: "Stuff things",
         noteText: "Bob Law"
+       
     },
     {
         noteTitle: "Cry",
