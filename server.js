@@ -5,6 +5,7 @@ const { clog } = require('./public/assets/js/clog');
 const api = require('./public/assets/Routes/index.js')
 const savedNotes= require('./db/saveNotes');
 const { title } = require('process');
+const { readFromFile, readAndAppend } = require('./db/fsUtils.js');
 const PORT = process.env.PORT||3001;
 
 const app = express();
@@ -24,25 +25,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/notes',(req,res) =>{
-
-  console.log('get request search for a responding target'),
-   
     res.sendFile(path.join(__dirname,'./public/notes.html'))
 
-    savedNotes.forEach(element => {
-       ntitle= element.noteTitle;
-       ntext=element.noteText;
-       console.log(element);
-    });
-   
-    //return res.status(200).json(savedNotes);
 });
-
-
-// app.get('/api/notes', (req,res) => {
-
-//   console.log('get request search for a responding target')
-// });
 
 app.post('/notes', (req, res) => {
     let response;

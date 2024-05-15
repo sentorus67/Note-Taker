@@ -1,12 +1,11 @@
 const notes = require('express').Router();
-const { readFromFile, readAndAppend } = require('../../../db/fsUtils');
+const { readFromFile, readAndAppend, writeToFile  } = require('../../../db/fsUtils');
 const uuid = require('../../../db/uuid');
 
 
 
 notes.get('/', (req, res) => {
-    console.log('grabbing from the notes')
-    readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
+    readFromFile('./db/notes.json').then((data) =>res.json(JSON.parse(data)));
 });
 
 notes.post('/', (req,res) => {
@@ -18,12 +17,22 @@ if(req.body!=undefined){
         id: uuid()
     };
     readAndAppend(Note,'./db/notes.json');
+   
 }
-
 });
 
-notes.delete('/',(req,res) => {
-    console.log('deleting from notes')
-});
+notes.delete(`/:id`,(req,res) => {
+    const {id}=req.params;
+readFromFile('./db/notes.json','utf8').then((data) =>{
+    let notepad=[];
+    notepad= JSON.parse(data);
+    //console.log(`delete the note with the id of ${id}`);
+    let editedNotepad= notepad.filter( (word)=>word.id != id);
+    //console.log(editedNotepad);
+    writeToFile('./db/notes.json',editedNotepad);
+  
+    });
+  });
+
 
 module.exports=notes;
